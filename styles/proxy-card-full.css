@@ -1,0 +1,424 @@
+/* ProxyCard 基础样式 */
+.proxy-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.proxy-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.proxy-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.proxy-card:hover::before {
+  opacity: 1;
+}
+
+.proxy-card--active {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2), 0 12px 40px rgba(34, 197, 94, 0.1);
+}
+
+.proxy-card--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* 卡片内容布局 */
+.proxy-card__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.proxy-card__info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.proxy-card__icon {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.proxy-card__icon--active {
+  background: rgba(34, 197, 94, 0.2);
+  color: rgb(187, 247, 208);
+}
+
+.proxy-card__details {
+  flex: 1;
+  min-width: 0;
+}
+
+.proxy-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.proxy-card__name {
+  font-weight: 600;
+  color: white;
+  font-size: 16px;
+  margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.proxy-card__type {
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.proxy-card__type--http {
+  background: rgba(59, 130, 246, 0.2);
+  color: rgb(191, 219, 254);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.proxy-card__type--https {
+  background: rgba(34, 197, 94, 0.2);
+  color: rgb(187, 247, 208);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.proxy-card__type--socks4 {
+  background: rgba(147, 51, 234, 0.2);
+  color: rgb(221, 214, 254);
+  border: 1px solid rgba(147, 51, 234, 0.3);
+}
+
+.proxy-card__type--socks5 {
+  background: rgba(99, 102, 241, 0.2);
+  color: rgb(196, 181, 253);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.proxy-card__address {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+}
+
+.proxy-card__auth {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.proxy-card__password-toggle {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: color 0.3s ease;
+}
+
+.proxy-card__password-toggle:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.proxy-card__password {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 8px 0 0 0;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+}
+
+/* 操作按钮区域 */
+.proxy-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 4px;
+}
+
+.proxy-card__divider {
+  width: 2px;
+  height: 32px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+  border-radius: 1px;
+  margin: 0 8px;
+}
+
+/* 状态指示器 */
+.proxy-card__status {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.proxy-card__status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgb(187, 247, 208);
+}
+
+.proxy-card__status-dot {
+  width: 8px;
+  height: 8px;
+  background: rgb(34, 197, 94);
+  border-radius: 50%;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* 按钮样式 - 继承统一样式系统 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  user-select: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.25));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  transition: all 0.5s ease;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn:hover::after {
+  width: 120px;
+  height: 120px;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  filter: grayscale(0.6);
+}
+
+.btn svg,
+.btn .icon {
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.btn:hover svg,
+.btn:hover .icon {
+  transform: scale(1.05);
+}
+
+/* 编辑按钮 */
+.btn--edit {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  box-shadow: 
+    0 4px 12px rgba(59, 130, 246, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn--edit:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border-color: rgba(59, 130, 246, 0.7);
+  box-shadow: 
+    0 8px 25px rgba(59, 130, 246, 0.35),
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn--edit::after {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%);
+}
+
+/* 删除按钮 */
+.btn--delete {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  box-shadow: 
+    0 4px 12px rgba(239, 68, 68, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn--delete:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  border-color: rgba(239, 68, 68, 0.7);
+  box-shadow: 
+    0 8px 25px rgba(239, 68, 68, 0.35),
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn--delete::after {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.4) 0%, transparent 70%);
+}
+
+.btn--delete:disabled {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(107, 114, 128, 0.5);
+}
+
+/* 切换按钮 */
+.btn--toggle {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  color: white;
+  border: 1px solid rgba(107, 114, 128, 0.5);
+  box-shadow: 
+    0 4px 12px rgba(107, 114, 128, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn--toggle:hover {
+  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+  border-color: rgba(107, 114, 128, 0.7);
+  box-shadow: 
+    0 8px 25px rgba(107, 114, 128, 0.35),
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn--toggle::after {
+  background: radial-gradient(circle, rgba(107, 114, 128, 0.4) 0%, transparent 70%);
+}
+
+.btn--toggle-active {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: white;
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  box-shadow: 
+    0 4px 12px rgba(34, 197, 94, 0.25),
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+.btn--toggle-active:hover {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  border-color: rgba(34, 197, 94, 0.7);
+  box-shadow: 
+    0 8px 25px rgba(34, 197, 94, 0.35),
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn--toggle-active::after {
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%);
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 
+      0 4px 12px rgba(34, 197, 94, 0.25),
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 0 20px rgba(34, 197, 94, 0.3);
+  }
+  100% {
+    box-shadow: 
+      0 4px 12px rgba(34, 197, 94, 0.25),
+      0 2px 4px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 0 30px rgba(34, 197, 94, 0.5);
+  }
+}

@@ -1,0 +1,382 @@
+/* ProxyCard 组件样式 */
+.proxy-card {
+  padding: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.proxy-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.proxy-card.active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2), 0 8px 25px rgba(34, 197, 94, 0.1);
+}
+
+.proxy-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.proxy-card-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 切换按钮样式 */
+.power-button {
+  padding: 14px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.power-button:hover {
+  transform: scale(1.05);
+}
+
+.power-button.active {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.4));
+  color: rgb(187, 247, 208);
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+}
+
+.power-button.active:hover {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.4), rgba(22, 163, 74, 0.5));
+}
+
+.power-button.inactive {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.power-button.inactive:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  color: white;
+}
+
+.power-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.power-button svg {
+  transition: transform 0.3s ease;
+}
+
+.power-button:hover svg {
+  transform: rotate(12deg);
+}
+
+.power-button.inactive:hover svg {
+  transform: scale(1.1);
+}
+
+/* 代理信息区域 */
+.proxy-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.proxy-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.proxy-name {
+  font-weight: 600;
+  color: white;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.proxy-type-badge {
+  padding: 4px 12px;
+  font-size: 11px;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid;
+}
+
+.proxy-type-http {
+  background: linear-gradient(to right, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.3));
+  color: rgb(191, 219, 254);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.proxy-type-https {
+  background: linear-gradient(to right, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.3));
+  color: rgb(187, 247, 208);
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.proxy-type-socks4 {
+  background: linear-gradient(to right, rgba(147, 51, 234, 0.2), rgba(126, 34, 206, 0.3));
+  color: rgb(221, 214, 254);
+  border-color: rgba(147, 51, 234, 0.2);
+}
+
+.proxy-type-socks5 {
+  background: linear-gradient(to right, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.3));
+  color: rgb(199, 210, 254);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.proxy-status-badge {
+  padding: 4px 12px;
+  font-size: 11px;
+  border-radius: 20px;
+  background: linear-gradient(to right, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.3));
+  color: rgb(187, 247, 208);
+  font-weight: 600;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: pulse 2s infinite;
+}
+
+.proxy-details {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+  /* justify-content: ; */
+}
+
+.proxy-details svg {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.proxy-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.proxy-location svg {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.location-text {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(99, 102, 241, 0.3));
+  color: rgb(199, 210, 254);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+.proxy-host {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 180px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.proxy-host-marquee {
+  position: relative;
+}
+
+.proxy-host-marquee .proxy-host-text {
+  display: inline-block;
+  animation: marquee-text 15s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  animation-delay: 1s;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.proxy-host-marquee .proxy-host-text::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 100%;
+  white-space: nowrap;
+  padding-left: 30px;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.proxy-host-marquee:hover .proxy-host-text {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-text {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  15% {
+    transform: translate3d(0, 0, 0);
+  }
+  85% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.proxy-username {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.proxy-separator {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* 操作按钮区域 */
+.proxy-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.action-button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-button:hover {
+  transform: scale(1.05);
+}
+
+.action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-button svg {
+  transition: transform 0.3s ease;
+}
+
+.action-button:hover svg {
+  transform: rotate(12deg);
+}
+
+.edit-button {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.edit-button:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.3));
+  color: rgb(191, 219, 254);
+}
+
+.delete-button {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.25));
+  color: rgb(252, 165, 165);
+}
+
+.delete-button:hover {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(220, 38, 38, 0.35));
+  color: rgb(254, 202, 202);
+}
+
+/* 动画 */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ProxyList 容器样式 */
+.proxy-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+}
+
+.proxy-list-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.proxy-list-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+  animation: bounce 2s infinite;
+}
+
+.proxy-list-empty-text {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.proxy-list-empty-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -15px, 0);
+  }
+  70% {
+    transform: translate3d(0, -7px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
