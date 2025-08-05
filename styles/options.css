@@ -485,3 +485,127 @@
     max-width: none;
   }
 }
+
+/* CSV导入导出相关样式 */
+.options-csv-help {
+  margin-top: 8px;
+}
+
+.csv-help-text {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.csv-sample-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.csv-sample-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.csv-sample-btn:active {
+  transform: translateY(0);
+}
+
+/* 更新按钮组样式以适应新按钮 */
+.options-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.options-header-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.options-header-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.875rem;
+  color: #64748b;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  background: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.options-header-link:hover {
+  color: #4f46e5;
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.2);
+  transform: translateY(-1px);
+}
+
+.options-header-link span {
+  font-weight: 500;
+}
+
+.options-header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.options-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.options-button:disabled:hover {
+  background: var(--button-bg);
+  transform: none;
+}
+
+/* 导入导出按钮特殊样式 */
+.options-button:has(svg[data-lucide="download"]) {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border-color: #047857;
+}
+
+.options-button:has(svg[data-lucide="upload"]) {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-color: #1d4ed8;
+}
+
+.options-button:has(svg[data-lucide="download"]):hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.options-button:has(svg[data-lucide="upload"]):hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+/* 动画优化 */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

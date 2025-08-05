@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react"
-import { Settings, Plus, RefreshCw, Server, Wifi, Activity } from "lucide-react"
+import React, { useState, useEffect, useRef } from "react"
+import { Settings, Plus, RefreshCw, Server, Wifi, Activity, Download, Upload, Github, Twitter } from "lucide-react"
 import type { ProxyConfig, Message, MessageResponse } from "~utils/types"
 import { Button, Card, Toast } from "~components/UI"
 import { ProxyCard } from "~components/ProxyCard"
 import { ProxyForm } from "~components/ProxyForm"
+import { exportProxiesToCSV, importProxiesFromCSV, downloadCSV, readFileAsText, generateSampleCSV } from "~utils/csv"
 import "~styles/global.css"
 import "~styles/options.css"
 
@@ -12,6 +13,8 @@ function OptionsPage() {
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editingProxy, setEditingProxy] = useState<ProxyConfig | null>(null)
+  const [importing, setImporting] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [toast, setToast] = useState<{
     visible: boolean
     message: string
@@ -139,6 +142,78 @@ function OptionsPage() {
     }
   }
 
+  // 导出代理到CSV
+  const handleExportCSV = () => {
+    try {
+      const csvContent = exportProxiesToCSV(proxies)
+      const now = new Date()
+      const dateStr = now.toISOString().split('T')[0]
+      downloadCSV(csvContent, `proxies-${dateStr}.csv`)
+      showToast(`成功导出 ${proxies.length} 个代理配置`, 'success')
+    } catch (error) {
+      showToast('导出失败', 'error')
+    }
+  }
+
+  // 下载示例CSV
+  const handleDownloadSample = () => {
+    try {
+      const sampleCSV = generateSampleCSV()
+      downloadCSV(sampleCSV, 'proxy-sample.csv')
+      showToast('示例文件已下载', 'success')
+    } catch (error) {
+      showToast('下载失败', 'error')
+    }
+  }
+
+  // 处理文件选择
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setImporting(true)
+    try {
+      const content = await readFileAsText(file)
+      const result = await importProxiesFromCSV(content)
+      
+      if (result.success.length > 0) {
+        // 批量添加成功的代理
+        for (const proxy of result.success) {
+          await sendMessage({
+            type: 'ADD_PROXY',
+            data: proxy
+          })
+        }
+        await loadProxies()
+      }
+
+      // 显示导入结果
+      const successCount = result.success.length
+      const errorCount = result.errors.length
+      
+      if (successCount > 0 && errorCount === 0) {
+        showToast(`成功导入 ${successCount} 个代理配置`, 'success')
+      } else if (successCount > 0 && errorCount > 0) {
+        showToast(`成功导入 ${successCount} 个，失败 ${errorCount} 个`, 'warning')
+      } else {
+        showToast(`导入失败：${result.errors.join('; ')}`, 'error')
+      }
+    } catch (error) {
+      showToast('文件读取失败', 'error')
+    } finally {
+      setImporting(false)
+      // 清空文件选择
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+    }
+  }
+
+  // 触发文件选择
+  const handleImportCSV = () => {
+    fileInputRef.current?.click()
+  }
+
   const activeProxy = proxies.find(p => p.isActive)
 
   return (
@@ -157,22 +232,67 @@ function OptionsPage() {
           </div>
           
           <div className="options-header-actions">
-            <button
-              onClick={() => setShowForm(true)}
-              className="options-button options-button-primary"
-            >
-              <Plus size={18} />
-              <span>添加新代理</span>
-            </button>
+            <div className="options-header-links">
+              <a 
+                href="https://github.com/Harukite/proxySwitch" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="options-header-link"
+                title="查看源代码"
+              >
+                <Github size={16} />
+                <span>GitHub</span>
+              </a>
+              <a 
+                href="https://x.com/amzHaruki" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="options-header-link"
+                title="联系开发者"
+              >
+                <Twitter size={16} />
+                <span>@amzHaruki</span>
+              </a>
+            </div>
             
-            <button
-              onClick={loadProxies}
-              disabled={loading}
-              className="options-button options-button-secondary"
-              title="刷新列表"
-            >
-              <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
-            </button>
+            <div className="options-header-buttons">
+              <button
+                onClick={() => setShowForm(true)}
+                className="options-button options-button-primary"
+              >
+                <Plus size={18} />
+                <span>添加新代理</span>
+              </button>
+              
+              <button
+                onClick={handleExportCSV}
+                disabled={loading || proxies.length === 0}
+                className="options-button options-button-secondary"
+                title="导出代理配置"
+              >
+                <Download size={18} />
+                <span>导出CSV</span>
+              </button>
+              
+              <button
+                onClick={handleImportCSV}
+                disabled={importing}
+                className="options-button options-button-secondary"
+                title="导入代理配置"
+              >
+                <Upload size={18} />
+                <span>{importing ? '导入中...' : '导入CSV'}</span>
+              </button>
+              
+              <button
+                onClick={loadProxies}
+                disabled={loading}
+                className="options-button options-button-secondary"
+                title="刷新列表"
+              >
+                <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -212,6 +332,18 @@ function OptionsPage() {
               </h2>
               <p className="options-section-subtitle">
                 管理您的所有代理服务器配置，随时切换网络连接
+              </p>
+            </div>
+            <div className="options-csv-help">
+              <p className="csv-help-text">
+                💡 CSV格式：名称,类型,IP地址,端口,用户名,密码 
+                <button 
+                  onClick={handleDownloadSample}
+                  className="csv-sample-btn"
+                  title="下载示例CSV文件"
+                >
+                  下载示例
+                </button>
               </p>
             </div>
           </div>
@@ -266,6 +398,15 @@ function OptionsPage() {
           loading={loading}
         />
       )}
+
+      {/* 隐藏的文件输入 */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".csv,.txt"
+        onChange={handleFileSelect}
+        style={{ display: 'none' }}
+      />
 
       {/* 提示消息 */}
       {toast.visible && (

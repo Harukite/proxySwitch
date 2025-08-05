@@ -1,8 +1,8 @@
 {
   "name": "proxy-switch",
-  "displayName": "Modern Proxy Switch",
+  "displayName": "Proxy Switch",
   "version": "1.0.0",
-  "description": "A modern Chrome extension for managing and switching proxy servers with elegant UI",
+  "description": "现代化Chrome代理管理扩展 - 支持多协议代理切换、IP归属地自动检测、CSV批量导入导出、用户认证和实时状态监控的优雅代理解决方案",
   "author": "Proxy Switch Team",
   "scripts": {
     "dev": "plasmo dev",

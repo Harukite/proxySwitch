@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Plus, RefreshCw, Wifi, WifiOff } from "lucide-react"
+import { Plus, RefreshCw, Wifi, WifiOff, Github, Twitter } from "lucide-react"
 import type { ProxyConfig, Message, MessageResponse } from "~utils/types"
 import { Button, LoadingSpinner, Toast } from "~components/UI"
 import { ProxyList } from "~components/ProxyList"
@@ -215,6 +215,32 @@ function IndexPopup() {
             activeProxyId={activeProxyId}
           />
         )}
+      </div>
+
+      {/* 底部链接 */}
+      <div className="popup-footer">
+        <div className="popup-footer-links">
+          <a 
+            href="https://github.com/Harukite/proxySwitch" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="popup-footer-link"
+            title="查看源代码"
+          >
+            <Github size={14} />
+            <span>GitHub</span>
+          </a>
+          <a 
+            href="https://x.com/amzHaruki" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="popup-footer-link"
+            title="联系开发者"
+          >
+            <Twitter size={14} />
+            <span>@amzHaruki</span>
+          </a>
+        </div>
       </div>
 
       {/* 提示消息 */}
